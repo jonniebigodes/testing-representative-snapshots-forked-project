@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "chromatic:tests": "vitest run --project chromatic"
+    "chromatic:tests": "vitest run --project chromatic",
+    "chromatic": "chromatic --project-token chpt_c90232be8c7c249"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
