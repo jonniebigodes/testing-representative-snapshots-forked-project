@@ -1,6 +1,9 @@
 name: "Chromatic"
 
-on: push
+on:
+  push:
+  # Runs in the upstream repo for PRs opened from forks
+  pull_request:
 
 jobs:
   chromatic:
@@ -18,13 +21,14 @@ jobs:
         # ⚠️ See your package manager's documentation for the correct command to install dependencies in a CI environment.
         run: npm install
       - name: Run Chromatic
-        uses: chromaui/action@latest
-        with:
-          # ⚠️ Make sure to configure a `CHROMATIC_PROJECT_TOKEN` repository secret
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          onlyChanged: true
-          exitZeroOnChanges: true
-          externals: |
-            **/*.sass
-            **/*.css
-            public/**
+        # Flag equivalents of the former chromaui/action inputs:
+        # onlyChanged -> --only-changed, exitZeroOnChanges -> --exit-zero-on-changes,
+        # externals -> --externals (one flag per glob).
+        # exitZeroOnChanges defaults to true in the action but false in the CLI, so it's set explicitly.
+        run: >-
+          npm run chromatic --
+          --only-changed
+          --exit-zero-on-changes
+          --externals "**/*.sass"
+          --externals "**/*.css"
+          --externals "public/**"
