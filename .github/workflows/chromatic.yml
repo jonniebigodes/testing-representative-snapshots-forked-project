@@ -1,6 +1,9 @@
 name: "Chromatic"
 
-on: push
+on:
+  push:
+  # Runs in the upstream repo for PRs opened from forks
+  pull_request:
 
 jobs:
   chromatic:
